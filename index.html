@@ -415,6 +415,7 @@ function calcQualification() {
 
 // ── SUBMIT ──
 function submitForm() {
+  fbq('track', 'Lead');
   console.log('submitForm() called — building payload...');
   var status      = calcQualification();
   var isQualified = (status === 'Qualified');
