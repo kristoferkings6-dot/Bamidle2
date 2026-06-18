@@ -154,10 +154,10 @@ var QUESTIONS = [
     text: 'What is your budget range?',
     hint: 'All responses are confidential.',
     options: [
-      { label: 'Above ₦500,000,000',               qualify: true },
-      { label: '₦200,000,000 – ₦500,000,000',      qualify: true },
-      { label: '₦100,000,000 – ₦200,000,000',      qualify: true },
-      { label: 'Below ₦100,000,000',                qualify: 'disqualify' }
+      { label: 'Above ₦85,000,000',               qualify: true },
+      { label: '₦75,000,000 – ₦85,000,000',      qualify: true },
+      { label: '₦67,000,000 – ₦75,000,000',      qualify: true },
+      { label: 'Below ₦67,000,000',                qualify: 'disqualify' }
     ]
   },
 
@@ -204,10 +204,10 @@ var QUESTIONS = [
     text: 'What property structure are you looking for?',
     hint: 'This helps us narrow down the most relevant inventory.',
     options: [
-      { label: '5-Bedroom Detached House',          qualify: false },
-      { label: '4-Bedroom Terrace / Semi-Detached', qualify: false },
-      { label: 'Apartment / Penthouse',             qualify: false },
-      { label: 'Land / Development Site',           qualify: false }
+      { label: '2-Bedroom fully-finished',          qualify: false },
+      { label: '2-Bedroom semi-finished', qualify: false },
+      
+      
     ]
   },
 
@@ -216,10 +216,10 @@ var QUESTIONS = [
     text: 'Which area are you most interested in?',
     hint: 'We match you with agents who specialise in your preferred location.',
     options: [
-      { label: 'Lekki / Victoria Island / Ikoyi',  qualify: false },
-      { label: 'Ajah / Sangotedo / Awoyaya',       qualify: false },
-      { label: 'Ikeja / Maryland / Magodo',        qualify: false },
-      { label: 'Abuja / Port Harcourt / Other',    qualify: false }
+      
+      { label: 'Sangotedo ',       qualify: false },
+      
+      
     ]
   }
 
@@ -233,8 +233,8 @@ var contact  = { name:'', phone:'', email:'' };
 var TOTAL_Q  = QUESTIONS.length;
 
 // ── CLIENT NAME from GitHub repo URL ──
-// Repo named "client-james" → clientName = "James"
-// Repo named "client-bamidele-adewale" → clientName = "Bamidele Adewale"
+// Repo named "client-james" → clientName = "Bamidele2"
+// Repo named "client-bamidele-adewale" → clientName = "Bamidele Adewale2"
 // source_url (full URL) is sent to Make.com for routing/filtering
 var pathParts  = window.location.pathname.split('/').filter(function(p){
   return p.length > 0 && p.indexOf('.') === -1;
