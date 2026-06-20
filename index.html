@@ -1,10 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+ <!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1550508203129868');
+fbq('track', 'PageView');
+fbq('track', 'Lead');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1550508203129868&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->       
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kringstar AI — Buyer Qualification</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<!-- ── GOOGLE ANALYTICS 4 ────────────────────────────────────────────
+     Replace G-5GHLP06H0G with your real Measurement ID from
+     analytics.google.com → Admin → Data Streams → your stream → Measurement ID
+     ─────────────────────────────────────────────────────────────── -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5GHLP06H0G"></script>
+<script>
+window.dataLayer=window.dataLayer||[];
+function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());
+gtag('config','G-5GHLP06H0G',{
+  send_page_view: true,
+  page_title: 'Kringstar Qualification Form'
+});
+// Helper — fire GA4 event safely even if gtag hasn't loaded yet
+function kga(eventName, params){
+  try{ gtag('event', eventName, params || {}); }
+  catch(e){ console.warn('GA4 event failed:', eventName, e); }
+}
+</script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -29,6 +66,19 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--white);
 .header h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5.5vw,3rem);font-weight:700;line-height:1.15;margin-bottom:.6rem;letter-spacing:-.02em}
 .header h1 span{color:var(--gold)}
 .header p{font-size:14px;color:var(--muted);line-height:1.6;max-width:440px;margin:0 auto}
+
+/* ── STEP BADGE ── */
+.step-badge{display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:1.25rem}
+.sbadge{display:flex;align-items:center;gap:5px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;font-weight:500}
+.sbadge .snum{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600}
+.sbadge .snum.done{background:var(--gold);color:var(--navy)}
+.sbadge .snum.active{background:rgba(201,151,26,.2);border:1px solid var(--gold);color:var(--gold-lt)}
+.sbadge .snum.todo{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.3)}
+.sbadge .slabel{color:rgba(255,255,255,.3);font-size:9px}
+.sbadge.active-stage .slabel{color:var(--gold)}
+.sbadge.done-stage .slabel{color:rgba(255,255,255,.45)}
+.sdiv{width:18px;height:1px;background:rgba(255,255,255,.1);margin:0 2px}
+
 .prog-wrap{margin-bottom:2rem}
 .prog-labels{display:flex;justify-content:space-between;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:7px}
 .prog-labels .cur{color:var(--gold)}
@@ -61,6 +111,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--white);
 .btn-next{flex:1;padding:13px 22px;background:linear-gradient(135deg,var(--gold) 0%,var(--gold-lt) 100%);border:none;border-radius:10px;color:var(--navy);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;letter-spacing:.3px}
 .btn-next:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(201,151,26,.3)}
 .btn-next:disabled{opacity:.35;cursor:not-allowed;transform:none;box-shadow:none}
+
+/* stage divider */
+.stage-divider{text-align:center;margin:1.5rem 0 .5rem;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.2);position:relative}
+.stage-divider::before,.stage-divider::after{content:'';position:absolute;top:50%;width:30%;height:1px;background:rgba(255,255,255,.07)}
+.stage-divider::before{left:0}.stage-divider::after{right:0}
+
 .result-wrap{text-align:center;padding:.5rem 0}
 .result-icon{font-size:3.5rem;margin-bottom:1rem}
 .result-title{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--gold-lt);margin-bottom:.4rem}
@@ -82,8 +138,30 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--white);
 
   <div class="header">
     <div class="brand"><div class="dot"></div>KRINGSTAR AI<div class="dot"></div></div>
-    <h1>Find Your <span>Ideal Property</span><br>in Lagos</h1>
-    <p>Answer a few quick questions so we can match you with the right properties and agent.</p>
+    <h1>Get Matched to a <span>Verified Lagos</span><br>Property Today</h1>
+    <p>We verify every buyer before connecting them with Our clients title-verified listings. No fake photos. No ghost agents. No wasted time.</p>
+  </div>
+
+  <div class="step-badge" id="stage-badges">
+    <span class="sbadge active-stage" id="sb-1">
+      <span class="snum active" id="sn-1">1</span>
+      <span class="slabel">Verification</span>
+    </span>
+    <span class="sdiv"></span>
+    <span class="sbadge" id="sb-2">
+      <span class="snum todo" id="sn-2">2</span>
+      <span class="slabel">Readiness</span>
+    </span>
+    <span class="sdiv"></span>
+    <span class="sbadge" id="sb-3">
+      <span class="snum todo" id="sn-3">3</span>
+      <span class="slabel">Property Match</span>
+    </span>
+    <span class="sdiv"></span>
+    <span class="sbadge" id="sb-4">
+      <span class="snum todo" id="sn-4">4</span>
+      <span class="slabel">Final Details</span>
+    </span>
   </div>
 
   <div class="prog-wrap">
@@ -98,128 +176,257 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--white);
 <script>
 // =====================================================================
 //
-//  HOW TO EDIT THIS FORM SAFELY — READ BEFORE TOUCHING ANYTHING
-//  ──────────────────────────────────────────────────────────────
-//  Only edit inside the QUESTIONS array below.
-//  Each question has:
-//    key     → field name sent to Make.com (no spaces, use underscores)
-//    text    → question shown to the user
-//    hint    → small sub-text under the question
-//    options → array of { label, qualify }
+//  KRINGSTAR AI — BUYER QUALIFICATION FORM v3
+//  ──────────────────────────────────────────
 //
-//  qualify values:
-//    true           → this answer satisfies one of the 6 contract criteria
-//    false          → neutral, captured but does not affect qualification
-//    'disqualify'   → immediately marks lead Unqualified regardless of other answers
+//  ── CLIENT CONFIG (edit this per deployment) ──────────────────────
 //
-//  ─── CONTRACT QUALIFICATION RULES (Clause 1, Kringstar AI Agreement) ───
+//  BUDGET_MINIMUM_LABEL: the budget option that qualifies.
+//    Set to match your client's lowest property price.
+//    Any budget option BELOW this triggers disqualify.
 //
-//  A lead is QUALIFIED only when ALL SIX contract criteria are satisfied:
-//    1. Verified Contact   — phone + email provided (handled at Step 0)
-//    2. Buying Intent      — actively seeking to buy within 12 months
-//    3. Budget Alignment   — budget consistent with client's property offerings
-//    4. Timeline           — purchase within 12 months
-//    5. Finance Method     — cash, mortgage, or combination stated
-//    6. Proof of Funds     — prepared to provide proof of funds
+//  STAGE definitions:
+//    Stage 1 — Contact (Step 0): name, WhatsApp, email
+//    Stage 2 — Readiness (Steps 1–3): timeline, budget, funding, proof of funds
+//    Stage 3 — Property Match (Steps 4–6): purpose, type, location
+//    Stage 4 — Final Details (Steps 7–9): bedrooms, pain point, source
 //
-//  The form maps to these 6 criteria via qualify:true answers.
-//  Any qualify:'disqualify' answer = immediately Unqualified.
-//  All 6 criteria must be met = Qualified.
+//  QUALIFICATION RULES (Kringstar AI Agreement Clause 1):
+//    QUALIFIED = all 6 criteria met, no disqualify answer
+//    Criteria 1: Verified contact (name + WhatsApp)
+//    Criteria 2: Active buying intent (not just exploring)
+//    Criteria 3: Budget meets or exceeds client minimum
+//    Criteria 4: Purchase within 12 months
+//    Criteria 5: Funding method confirmed
+//    Criteria 6: Willing to provide proof of funds
 //
-//  DO NOT edit below the "─── END CONFIG ───" line.
+//  Context questions (purpose, type, location, bedrooms, pain point,
+//  source) are sent to Make.com for agent matching but do NOT affect
+//  the qualified/unqualified result.
+//
+//  WEBHOOK: keep as FormData — do not change to JSON.
 //
 // =====================================================================
 
-var WEBHOOK  = 'https://hook.us2.make.com/syhy9b18tpxhmasotx5j8t16lgtxlb2h';
+var WEBHOOK = 'https://hook.us2.make.com/gh8hqll4kdltuyk1eg52zk567w1n8f1g';
+
+// ─── CLIENT CONFIG ───────────────────────────────────────────────────
+// Change BUDGET_QUALIFY_FROM to the index of the FIRST qualifying budget option.
+// Options are listed low-to-high below. Index 0 = lowest.
+// Example: if client's minimum is ₦23M, set BUDGET_QUALIFY_FROM = 0
+//          if client's minimum is ₦100M, set BUDGET_QUALIFY_FROM = 3
+var BUDGET_QUALIFY_FROM = 0; // 0 = ₦23M+, 1 = ₦50M+, 2 = ₦100M+, 3 = ₦200M+
 
 // ─── QUESTIONS CONFIG ────────────────────────────────────────────────
+// qualify values:
+//   true          → satisfies one of the 6 contract criteria
+//   false         → context only, does not affect qualification
+//   'disqualify'  → immediately marks lead Unqualified
+
+var BUDGET_OPTIONS = [
+  { label: '₦23,000,000 – ₦50,000,000' },
+  { label: '₦50,000,000 – ₦100,000,000' },
+  { label: '₦100,000,000 – ₦200,000,000' },
+  { label: '₦200,000,000 – ₦500,000,000' },
+  { label: 'Above ₦500,000,000' }
+];
+
+function buildBudgetOptions() {
+  var opts = [];
+  for (var i = 0; i < BUDGET_OPTIONS.length; i++) {
+    opts.push({
+      label:   BUDGET_OPTIONS[i].label,
+      qualify: i >= BUDGET_QUALIFY_FROM ? true : 'disqualify'
+    });
+  }
+  return opts;
+}
+
 var QUESTIONS = [
 
-  // CONTRACT CRITERION 2 & 4: Buying Intent + Timeline
+  // ── STAGE 2: BUYER READINESS (Q1–Q5) ─────────────────────────────
+  // These 5 questions qualify the lead against Our clients criteria.
+  // They continue the emotional thread from Ad Angle 1:
+  // buyer lands scared of fraud → form validates that fear → presents
+  // Bamidele as the verified solution.
+
+  // Q1 — Active search signal (mirrors ad hook — buyer self-selects)
+  // Criterion 2 & 4: Intent + Timeline
   {
-    key:  'purchase_timeline',
-    text: 'When are you looking to purchase?',
-    hint: 'We work with buyers who are actively in the market.',
+    key:   'purchase_timeline',
+    stage: 2,
+    text:  'Have you been searching for a Lagos property and struggling to find an agent you can actually trust?',
+    hint:  'Our clients works exclusively with verified, serious buyers. Be honest — this helps us match you correctly.',
     options: [
-      { label: 'Within the next 3 months',  qualify: true },
-      { label: '3 – 6 months',              qualify: true },
-      { label: '6 – 12 months',             qualify: true },
-      { label: 'Just exploring for now',    qualify: 'disqualify' }
+      { label: 'Yes — I\'ve been searching and I\'m ready to buy',          qualify: true  },
+      { label: 'Yes — I\'ve been searching but still deciding',             qualify: true  },
+      { label: 'Not yet — I\'m planning to start searching within 6 months', qualify: true  },
+      { label: 'No — I\'m just browsing for now',                           qualify: 'disqualify' }
     ]
   },
 
-  // CONTRACT CRITERION 3: Budget Alignment
+  // Q2 — Budget (Criterion 3: Budget alignment with Our clients inventory)
   {
-    key:  'budget',
-    text: 'What is your budget range?',
-    hint: 'All responses are confidential.',
+    key:   'budget',
+    stage: 2,
+    text:  'What is your total budget for this purchase — including all fees and charges?',
+    hint:  'All responses are strictly confidential. This helps us match you to verified listings within your range.',
+    options: buildBudgetOptions()
+  },
+
+  // Q3 — Funding method (Criterion 5: Finance method confirmed)
+  {
+    key:   'funding_method',
+    stage: 2,
+    text:  'How are you planning to fund this purchase?',
+    hint:  'Our clients works with buyers across all payment methods. There is no wrong answer here.',
     options: [
-      { label: 'Above ₦85,000,000',               qualify: true },
-      { label: '₦75,000,000 – ₦85,000,000',      qualify: true },
-      { label: '₦67,000,000 – ₦75,000,000',      qualify: true },
-      { label: 'Below ₦67,000,000',                qualify: 'disqualify' }
+      { label: 'Outright Cash Payment',          qualify: true },
+      { label: 'Developer Payment Plan',         qualify: true },
+      { label: 'Mortgage / Bank Financing',      qualify: true },
+      { label: 'Combination (Cash + Mortgage)',  qualify: true },
+      { label: 'I haven\'t decided yet',         qualify: 'disqualify' }
     ]
   },
 
-  // CONTRACT CRITERION 5: Finance Method
+  // Q4 — Proof of funds (Criterion 6: Verification — this is the
+  // exact promise Ad Angle 1 makes: "we verify the buyer")
   {
-    key:  'funding_method',
-    text: 'How are you planning to fund this purchase?',
-    hint: 'We work with buyers using all financing methods.',
+    key:   'proof_of_funds',
+    stage: 2,
+    text:  'To protect you and ensure only serious buyers access our verified listings — are you able to provide proof of funds?',
+    hint:  'This is what separates serious buyers from time-wasters. Our Clients only works with verified buyers.',
     options: [
-      { label: 'Outright Cash Payment',         qualify: true },
-      { label: 'Mortgage / Bank Financing',     qualify: true },
-      { label: 'Combination (Cash + Mortgage)', qualify: true },
-      { label: 'Not sure yet',                  qualify: 'disqualify' }
+      { label: 'Yes — I can provide it immediately',          qualify: true },
+      { label: 'Yes — I can provide it within 48 hours',      qualify: true },
+      { label: 'I would prefer not to at this stage',         qualify: 'disqualify' }
     ]
   },
 
-  // CONTRACT CRITERION 6: Proof of Funds
+  // Q5 — Purpose (context for Our clients— does not affect qualification)
+  // Kept in Stage 2 as a soft transition before property matching
   {
-    key:  'proof_of_funds',
-    text: 'Are you prepared to provide proof of funds?',
-    hint: 'High-demand properties require verification to proceed.',
+    key:   'property_purpose',
+    stage: 2,
+    text:  'What is the primary purpose of this property for you?',
+    hint:  'Our clients has verified inventory suited for both personal use and investment.',
     options: [
-      { label: 'Yes, I can provide it immediately',  qualify: true },
-      { label: 'Yes, within 48 hours',               qualify: true },
-      { label: 'I would prefer not to at this stage', qualify: 'disqualify' }
+      { label: 'Primary Residence — I want to live in it',    qualify: false },
+      { label: 'Buy-to-Let — I want rental income',           qualify: false },
+      { label: 'Investment — capital appreciation',           qualify: false },
+      { label: 'Vacation / Second Home',                      qualify: false }
     ]
   },
 
-  // CONTEXT QUESTIONS — captured for the agent, do not affect qualification
-  {
-    key:  'property_purpose',
-    text: 'What is the primary purpose of this property?',
-    hint: 'We have specialised inventory for both living and investing.',
-    options: [
-      { label: 'Primary Residence (to live in)',   qualify: false },
-      { label: 'Buy-to-Let (rental income)',       qualify: false },
-      { label: 'Capital Appreciation (flipping)',  qualify: false },
-      { label: 'Vacation / Second Home',           qualify: false }
-    ]
-  },
+  // ── STAGE 3: PROPERTY MATCH (Q6–Q8) ──────────────────────────────
+  // These questions match the buyer to Bamidele's specific inventory.
+  // Tone shifts: from "are you serious?" to "let's find your property."
 
+  // Q6 — Location (routes to Bamidele if Ajah/Sangotedo/Awoyaya)
   {
-    key:  'property_type',
-    text: 'What property structure are you looking for?',
-    hint: 'This helps us narrow down the most relevant inventory.',
+    key:   'location_interest',
+    stage: 3,
+    text:  'Which area of Lagos are you most focused on?',
+    hint:  'Our clients specialises in verified properties across key Lagos corridors.',
     options: [
-      { label: '2-Bedroom fully-finished',          qualify: false },
-      { label: '2-Bedroom semi-finished', qualify: false },
+      { label: 'Ajah / Sangotedo / Awoyaya',       qualify: false },
+      { label: 'Lekki / Victoria Island / Ikoyi',  qualify: false },
+      { label: 'Ikeja / Maryland / Magodo',         qualify: false },
       
+    ]
+  },
+
+  // Q7 — Property type
+  {
+    key:   'property_type',
+    stage: 3,
+    text:  'What type of property are you looking for?',
+    hint:  'This helps us pull the most relevant verified listings from Our clients\'s current portfolio.',
+    options: [
+      { label: 'Apartment / Penthouse',               qualify: false },
+      { label: '3–4 Bedroom Terrace / Semi-Detached', qualify: false },
+      { label: '5-Bedroom Detached House',            qualify: false },
       
     ]
   },
 
+  // Q8 — Bedrooms
   {
-    key:  'location_interest',
-    text: 'Which area are you most interested in?',
-    hint: 'We match you with agents who specialise in your preferred location.',
+    key:   'bedrooms',
+    stage: 3,
+    text:  'How many bedrooms do you need?',
+    hint:  'We\'ll match this to active, title-verified listings in Our clients\'s portfolio right now.',
     options: [
-      
-      { label: 'Sangotedo ',       qualify: false },
-      
-      
+      { label: 'Studio / 1 Bedroom',  qualify: false },
+      { label: '2 Bedrooms',          qualify: false },
+      { label: '3 Bedrooms',          qualify: false },
+      { label: '4 Bedrooms',          qualify: false },
+      { label: '5+ Bedrooms',         qualify: false },
+      { label: 'Flexible / Open',     qualify: false }
+    ]
+  },
+
+  // ── STAGE 4: FINAL DETAILS (Q9–Q12) ──────────────────────────────
+  // These 4 questions deepen trust, reveal closing intel, score urgency,
+  // and confirm next-step commitment — all matching Ad Angle 1's promise.
+
+  // Q9 — Biggest concern (callbacks the fraud fear from the ad)
+  // Buyer has committed through Q1–Q8 so this now feels like we're listening
+  {
+    key:   'biggest_concern',
+    stage: 4,
+    text:  'What is your biggest concern about buying property in Lagos right now?',
+    hint:  'Our clients addresses each of these directly. Your answer helps us prepare the right information for you.',
+    options: [
+      { label: 'I\'m scared of paying for a property with a fake or disputed title',  qualify: false },
+      { label: 'I\'ve dealt with agents who disappeared after taking my time',         qualify: false },
+      { label: 'I\'ve seen listings with photos that don\'t match the real property',  qualify: false },
+      { label: 'I don\'t know how to verify if a property price is fair',             qualify: false },
+      { label: 'I\'m new to this and don\'t know where to start',                     qualify: false }
+    ]
+  },
+
+  // Q10 — Commitment close (Option A)
+  // Confirms buyer is ready to hear from Bamidele — sets up WhatsApp nurture
+  {
+    key:   'readiness_to_speak',
+    stage: 4,
+    text:  'Are you ready to speak with Our clients — our verified Lagos property agent — this week?',
+    hint:  'Our clients responds to all verified matches within 2 hours.',
+    options: [
+      { label: 'Yes — I\'m ready to be contacted immediately',               qualify: false },
+      { label: 'Yes — but I need a few more days to prepare',                qualify: false },
+      { label: 'I\'d prefer to receive verified property options on WhatsApp first', qualify: false }
+    ]
+  },
+
+  // Q11 — Closing confidence (Option B)
+  // Tells you exactly how to close each individual lead
+  {
+    key:   'confidence_factor',
+    stage: 4,
+    text:  'What would make you feel confident enough to move forward with a property purchase?',
+    hint:  'This helps Our client prepare exactly the right information for your first conversation.',
+    options: [
+      { label: 'Seeing the title documents and verification before committing',  qualify: false },
+      { label: 'Speaking directly with a verified, licensed agent first',        qualify: false },
+      { label: 'Viewing the property in person before any payment',              qualify: false },
+      { label: 'Getting a legal opinion from my own lawyer',                     qualify: false }
+    ]
+  },
+
+  // Q12 — Search history / urgency score (Option C)
+  // More searches = more frustrated = hottest lead for Make.com scoring
+  {
+    key:   'properties_viewed',
+    stage: 4,
+    text:  'How many properties have you viewed or enquired about in the last 30 days?',
+    hint:  'This tells us how active your search is so we can prioritise accordingly.',
+    options: [
+      { label: 'None — I\'m starting fresh with you',          qualify: false },
+      { label: '1 – 3 properties',                             qualify: false },
+      { label: '4 – 10 properties',                            qualify: false },
+      { label: 'More than 10 — I\'ve been searching a long time', qualify: false }
     ]
   }
 
@@ -232,35 +439,36 @@ var answers  = {};
 var contact  = { name:'', phone:'', email:'' };
 var TOTAL_Q  = QUESTIONS.length;
 
+// Stage boundaries: Stage 2 = Q1–Q5, Stage 3 = Q6–Q8, Stage 4 = Q9–Q12
+var STAGE_MAP = {
+  2: { from: 1,  to: 5  },
+  3: { from: 6,  to: 8  },
+  4: { from: 9,  to: 12 }
+};
+
 // ── CLIENT NAME from GitHub repo URL ──
-// Repo named "client-james" → clientName = "Bamidele2"
-// Repo named "client-bamidele-adewale" → clientName = "Bamidele Adewale2"
-// source_url (full URL) is sent to Make.com for routing/filtering
-var pathParts  = window.location.pathname.split('/').filter(function(p){
-  return p.length > 0 && p.indexOf('.') === -1;
-});
+var pathParts  = window.location.pathname.split('/').filter(function(p){ return p.length > 0 && p.indexOf('.') === -1; });
 var repoSlug   = pathParts[0] || 'unknown';
 var clientName = repoSlug
   .replace(/^client[-_]?/i, '')
-  .split(/[-_]/)
-  .filter(Boolean)
+  .split(/[-_]/).filter(Boolean)
   .map(function(w){ return w.charAt(0).toUpperCase() + w.slice(1).toLowerCase(); })
   .join(' ') || repoSlug;
 
-// ── BUILD FORM HTML FROM CONFIG ──
+// ── BUILD FORM ──
 (function buildForm() {
   var card = document.getElementById('card-area');
   var html = '';
 
-  // Step 0: contact details (satisfies Contract Criterion 1: Verified Contact)
+  // Step 0: Contact (Stage 1)
   html += '<div class="step active" id="step-0">';
-  html += '<div class="q-num">Before We Begin</div>';
-  html += '<div class="q-text">Your Contact Details</div>';
-  html += '<div class="q-hint">So we can connect you with the right agent.</div>';
+  html += '<div class="q-num">Stage 1 of 4 — Verification</div>';
+  html += '<div class="q-text">Let\'s verify you before we match you</div>';
+  html += '<div class="q-hint">We verify every buyer before connecting them with Bamidele Adewale. This protects you — and ensures the agent takes your enquiry seriously. Your details are strictly confidential.</div>';
   html += '<div class="fields">';
   html += '<div><label class="flabel">Full Name</label><input class="finput" id="f-name" type="text" placeholder="e.g. Adebayo Okafor" autocomplete="name"></div>';
   html += '<div><label class="flabel">WhatsApp Number</label><input class="finput" id="f-phone" type="tel" placeholder="e.g. 08012345678" autocomplete="tel"></div>';
-  html += '<div><label class="flabel">Email Address</label><input class="finput" id="f-email" type="email" placeholder="e.g. you@email.com" autocomplete="email"></div>';
+  html += '<div><label class="flabel">Email Address <span style="color:rgba(255,255,255,.3);font-weight:300">(optional)</span></label><input class="finput" id="f-email" type="email" placeholder="e.g. you@email.com" autocomplete="email"></div>';
   html += '</div>';
   html += '<div class="nav"><button class="btn-next" onclick="step0Next()">Continue →</button></div>';
   html += '</div>';
@@ -269,8 +477,14 @@ var clientName = repoSlug
   for (var i = 0; i < QUESTIONS.length; i++) {
     var q   = QUESTIONS[i];
     var num = i + 1;
+    var stageNum = q.stage;
+    var stageLabel = stageNum === 2 ? 'Stage 2 of 4 — Buyer Readiness' :
+                     stageNum === 3 ? 'Stage 3 of 4 — Property Match' :
+                                      'Stage 4 of 4 — Final Details';
+    var qInStage   = countQInStage(i);
+
     html += '<div class="step" id="step-' + num + '">';
-    html += '<div class="q-num">Question ' + num + ' of ' + TOTAL_Q + '</div>';
+    html += '<div class="q-num">' + stageLabel + ' · Question ' + qInStage.cur + ' of ' + qInStage.total + '</div>';
     html += '<div class="q-text">' + q.text + '</div>';
     html += '<div class="q-hint">' + q.hint + '</div>';
     html += '<div class="opts" id="opts-' + num + '">';
@@ -282,7 +496,7 @@ var clientName = repoSlug
     if (num < TOTAL_Q) {
       html += '<button class="btn-next" id="btn-' + num + '" disabled onclick="goNext(' + num + ')">Continue →</button>';
     } else {
-      html += '<button class="btn-next" id="btn-' + num + '" disabled onclick="submitForm()">Submit →</button>';
+      html += '<button class="btn-next" id="btn-' + num + '" disabled onclick="submitForm()">Submit My Details →</button>';
     }
     html += '</div></div>';
   }
@@ -300,22 +514,58 @@ var clientName = repoSlug
   card.innerHTML = html;
 })();
 
+function countQInStage(globalIndex) {
+  var stage = QUESTIONS[globalIndex].stage;
+  var cur = 0, total = 0;
+  for (var i = 0; i < QUESTIONS.length; i++) {
+    if (QUESTIONS[i].stage === stage) {
+      total++;
+      if (i <= globalIndex) cur++;
+    }
+  }
+  return { cur: cur, total: total };
+}
+
+// ── STAGE BADGE UPDATER ──
+function updateStageBadges(step) {
+  // Determine active stage
+  var activeStage = step === 0 ? 1 :
+    step <= 5 ? 2 :
+    step <= 8 ? 3 :
+    step <= 12 ? 4 : 5;
+
+  for (var s = 1; s <= 4; s++) {
+    var numEl   = document.getElementById('sn-' + s);
+    var badgeEl = document.getElementById('sb-' + s);
+    if (!numEl) continue;
+    numEl.className   = 'snum ' + (s < activeStage ? 'done' : s === activeStage ? 'active' : 'todo');
+    badgeEl.className = 'sbadge ' + (s < activeStage ? 'done-stage' : s === activeStage ? 'active-stage' : '');
+    if (s < activeStage) numEl.textContent = '✓';
+    else numEl.textContent = String(s);
+  }
+}
+
 // ── PROGRESS ──
 function setProgress(step) {
   var pct = step === 0 ? 0 : Math.round((step / (TOTAL_Q + 1)) * 100);
   document.getElementById('prog-fill').style.width = pct + '%';
   document.getElementById('prog-pct').textContent  = pct + '%';
-  document.getElementById('prog-label').textContent =
+  var stageLabel =
     step === 0      ? 'Getting Started' :
-    step <= TOTAL_Q ? 'Question ' + step + ' of ' + TOTAL_Q :
-    'Complete';
+    step <= 5       ? 'Stage 2 — Buyer Readiness' :
+    step <= 8       ? 'Stage 3 — Property Match' :
+    step <= TOTAL_Q ? 'Stage 4 — Final Details' :
+                      'Complete';
+  document.getElementById('prog-label').textContent = stageLabel;
 }
 
 // ── SHOW STEP ──
 function showStep(n) {
   document.querySelectorAll('.step').forEach(function(el){ el.classList.remove('active'); });
   document.getElementById('step-' + n).classList.add('active');
-  setProgress(typeof n === 'number' ? n : TOTAL_Q + 1);
+  var stepNum = typeof n === 'number' ? n : TOTAL_Q + 1;
+  setProgress(stepNum);
+  updateStageBadges(stepNum);
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -341,6 +591,10 @@ function step0Next() {
   contact.name  = name;
   contact.phone = phone;
   contact.email = email;
+
+  // ── GA4: form started ──────────────────────────────────────────
+  kga('form_start', { client: clientName });
+
   showStep(1);
 }
 
@@ -365,6 +619,13 @@ function pick(stepNum, optIndex, el) {
 
 function goNext(current) {
   if (!answers[current]) return;
+
+  // ── GA4: stage boundary events ────────────────────────────────
+  // Step 5 = last question of Stage 2 (Readiness)
+  if (current === 5) kga('stage2_complete', { client: clientName });
+  // Step 8 = last question of Stage 3 (Property Match)
+  if (current === 8) kga('stage3_complete', { client: clientName });
+
   showStep(current + 1);
 }
 
@@ -372,17 +633,14 @@ function goBack(current) {
   showStep(current - 1);
 }
 
-// ── QUALIFICATION LOGIC (mirrors Clause 1 of Kringstar AI Agreement) ──
-// A lead is Qualified ONLY when:
-//   - No answer has qualify:'disqualify'
-//   - All 4 contract criteria questions (timeline, budget, funding, proof_of_funds)
-//     received a qualify:true answer
-// Context questions (purpose, property type, location) never affect the result.
+// ── QUALIFICATION LOGIC ──
+// QUALIFIED = no disqualify answer + all 6 criteria met
 function calcQualification() {
+  // Check for any disqualify answer
   for (var i = 1; i <= TOTAL_Q; i++) {
     if (answers[i] && answers[i].qualify === 'disqualify') return 'Unqualified';
   }
-  // Check every question that HAS a qualify:true option — did the lead pick it?
+  // Check all criteria questions got qualify:true
   for (var i = 0; i < QUESTIONS.length; i++) {
     var hasQualifyOption = false;
     for (var j = 0; j < QUESTIONS[i].options.length; j++) {
@@ -398,9 +656,28 @@ function calcQualification() {
 
 // ── SUBMIT ──
 function submitForm() {
-  console.log('submitForm() called — building payload...');
   var status      = calcQualification();
   var isQualified = (status === 'Qualified');
+
+  // ── GA4: form completed ────────────────────────────────────────
+  kga('form_complete', {
+    client:          clientName,
+    qualification:   status,
+    budget:          answers[2] ? answers[2].label : 'unknown',
+    funding:         answers[3] ? answers[3].label : 'unknown',
+    location:        answers[6] ? answers[6].label : 'unknown'
+  });
+
+  // ── GA4: qualified lead (only fires for hot leads) ─────────────
+  if (isQualified) {
+    kga('lead_qualified', {
+      client:   clientName,
+      budget:   answers[2] ? answers[2].label : 'unknown',
+      funding:  answers[3] ? answers[3].label : 'unknown',
+      location: answers[6] ? answers[6].label : 'unknown',
+      bedrooms: answers[8] ? answers[8].label : 'unknown'
+    });
+  }
 
   showStep('result');
   document.getElementById('prog-fill').style.width = '100%';
@@ -412,18 +689,18 @@ function submitForm() {
     '<div class="verdict ' + (isQualified ? 'verdict-qualified' : 'verdict-unqualified') + '">' +
     '<h3>' + (isQualified ? 'You are a Strong Buyer Match' : 'Thank You for Your Interest') + '</h3>' +
     '<p>' + (isQualified
-      ? 'Based on your responses you show strong intent and readiness. An agent will contact you within 2 hours to discuss available properties.'
-      : 'Your details have been received. Our team will review your profile and reach out with helpful market information.') +
+      ? 'You have been verified as a serious buyer. Bamidele Adewale will contact you within 2 hours on WhatsApp with title-verified properties that match your criteria. No fake listings. No wasted trips.'
+      : 'Thank you for completing the form. Your profile has been received and our team will follow up with helpful market information and listings that may suit your situation.') +
     '</p></div>';
 
   // ── FORMDATA PAYLOAD ──
   var fd = new FormData();
 
-  // Routing fields — use source_url in Make.com to filter by client
-  fd.append('source_url',  window.location.href);   // full URL — filter/route in Make
-  fd.append('client_name', clientName);              // clean name from repo slug
+  // Routing fields
+  fd.append('source_url',  window.location.href);
+  fd.append('client_name', clientName);
 
-  // Contact (Contract Criterion 1: Verified Contact)
+  // Contact (Criterion 1)
   fd.append('full_name', contact.name);
   fd.append('whatsapp',  contact.phone);
   fd.append('email',     contact.email);
@@ -438,40 +715,28 @@ function submitForm() {
 
   fd.append('submitted_at', new Date().toISOString());
 
-  console.log('Payload ready. Sending to webhook:', WEBHOOK);
-  console.log('Fields: source_url=' + window.location.href + ' | full_name=' + contact.name + ' | status=' + status);
+  console.log('Sending to webhook:', WEBHOOK, '| client:', clientName, '| status:', status);
 
-  // Use XMLHttpRequest — more reliable than fetch for cross-origin FormData
+  // Primary: XHR
   var xhr = new XMLHttpRequest();
   xhr.open('POST', WEBHOOK, true);
 
   xhr.onload = function() {
     var el = document.getElementById('send-status');
-    if (xhr.status >= 200 && xhr.status < 300) {
-      if (el) el.textContent = 'Your details have been submitted successfully.';
-    } else {
-      // Still show success to user but log the real error
-      if (el) el.textContent = 'Your details have been submitted successfully.';
-      console.error('Webhook error status:', xhr.status, xhr.responseText);
-    }
+    if (el) el.textContent = 'Your details have been submitted successfully.';
     var btn = document.getElementById('restart-btn');
     if (btn) btn.disabled = false;
+    if (xhr.status < 200 || xhr.status >= 300) {
+      console.error('Webhook error:', xhr.status, xhr.responseText);
+    }
   };
 
   xhr.onerror = function() {
-    // Network error — try fallback with no-cors mode
     var el = document.getElementById('send-status');
     if (el) el.textContent = 'Your details have been submitted successfully.';
-    console.error('XHR network error — trying fetch fallback');
-
-    fetch(WEBHOOK, {
-      method: 'POST',
-      mode:   'no-cors',
-      body:   fd
-    }).catch(function(e) {
-      console.error('Fetch fallback also failed:', e);
-    });
-
+    console.error('XHR failed — trying fetch fallback');
+    fetch(WEBHOOK, { method:'POST', mode:'no-cors', body:fd })
+      .catch(function(e){ console.error('Fetch fallback failed:', e); });
     var btn = document.getElementById('restart-btn');
     if (btn) btn.disabled = false;
   };
